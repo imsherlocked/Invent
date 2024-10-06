@@ -77,7 +77,7 @@ Navigate to the Backend Folder:
 ```bash
 cd backend
 ```
-###Installation
+### Installation
 
 **Install Dependencies:**
 ```
@@ -115,14 +115,14 @@ npm start
 The frontend should now be running on http://localhost:3000.
 ```
 
-###Running the Application
+### Running the Application
 ```
 Backend: http://localhost:5000
 Frontend: http://localhost:3000
 Navigate to http://localhost:3000 in your browser to start using the inventory management system.
 ```
 
-###API Documentation
+### API Documentation
 
 **Base URL**
 ```
@@ -180,7 +180,7 @@ Response: Confirmation message of item deletion.
 
 ```
 
-###Architecture Overview
+### Architecture Overview
 ```
 Frontend:
 
