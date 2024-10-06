@@ -68,8 +68,8 @@ function InventoryManagement() {
     const fetchItems = async () => {
         try {
             console.log("Inside ftech");
-            // const response = await axios.get(`http://localhost:5000/api/inventory/items?page=${page}&limit=${itemsPerPage}`);
-            const response = await axios.get(`http://localhost:5000/api/inventory/items`);
+            // const response = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items?page=${page}&limit=${itemsPerPage}`);
+            const response = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items`);
             setItems(response.data);
             // setTotalPages(response.data.totalPages);
         } catch (error) {
@@ -97,13 +97,13 @@ function InventoryManagement() {
 
     //         if (editingItemId) {
     //             // Update the item if we are editing
-    //             const response = await axios.put(`http://localhost:5000/api/inventory/update/${editingItemId}`, newItem);
+    //             const response = await axios.put(`https://invent-backend-ytde.onrender.com/api/inventory/update/${editingItemId}`, newItem);
     //             setItems(items.map(item => (item._id === editingItemId ? response.data : item)));
     //             setEditingItemId(null);
     //         } else {
     //             // Otherwise, add a new item
     //             if(itemName){
-    //             const response = await axios.post('http://localhost:5000/api/inventory/add', newItem);
+    //             const response = await axios.post('https://invent-backend-ytde.onrender.com/api/inventory/add', newItem);
     //             setItems([...items, response.data]);
     //             }
     //         }
@@ -135,7 +135,7 @@ function InventoryManagement() {
     
             if (itemName) {
                 // Check if an item with the same name already exists
-                const existingItemResponse = await axios.get(`http://localhost:5000/api/inventory/items`);
+                const existingItemResponse = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items`);
                 const existingItem = existingItemResponse.data.find(item => item.name === itemName);
                 // if(newItem.price)
                     // existingItem.price=price;
@@ -157,14 +157,14 @@ function InventoryManagement() {
                             existingItem.quantity = parseInt(existingItem.quantity)+parseInt(quantity);
                         }
                         // Update the item
-                        const response = await axios.put(`http://localhost:5000/api/inventory/update/${existingItem._id}`, existingItem);
+                        const response = await axios.put(`https://invent-backend-ytde.onrender.com/api/inventory/update/${existingItem._id}`, existingItem);
                         setItems(items.map(item => (item._id === existingItem._id ? response.data : item)));
                         setEditingItemId(null);
                     } else {
                         // If not editing but item already exists, show alert
                         alert('Item already exists. Updating the existing item.');
                         existingItem.quantity = parseInt(existingItem.quantity)+parseInt(quantity);
-                        const response = await axios.put(`http://localhost:5000/api/inventory/update/${existingItem._id}`, existingItem);
+                        const response = await axios.put(`https://invent-backend-ytde.onrender.com/api/inventory/update/${existingItem._id}`, existingItem);
                         setItems(items.map(item => (item._id === existingItem._id ? response.data : item)));
                     }
                 } else {
@@ -174,7 +174,7 @@ function InventoryManagement() {
                     }
                     // If item doesn't exist, add new item
                     try {
-                        const response = await axios.post('http://localhost:5000/api/inventory/add', newItem);
+                        const response = await axios.post('https://invent-backend-ytde.onrender.com/api/inventory/add', newItem);
                     
                         // Check if response status is 200 (indicating success)
                         if (response.status === 200) {
@@ -199,7 +199,7 @@ function InventoryManagement() {
                     }
                     
                     
-                    // const response = await axios.post('http://localhost:5000/api/inventory/add', newItem);
+                    // const response = await axios.post('https://invent-backend-ytde.onrender.com/api/inventory/add', newItem);
                     // console.log(response.status)
                     // if(response.status)
                     // {
@@ -226,7 +226,7 @@ function InventoryManagement() {
     };
     const deleteItem = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/inventory/delete/${id}`);
+            await axios.delete(`https://invent-backend-ytde.onrender.com/api/inventory/delete/${id}`);
             setItems(items.filter(item => item._id !== id));
         } catch (error) {
             console.error("Error deleting item:", error);
