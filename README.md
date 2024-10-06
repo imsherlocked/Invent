@@ -32,8 +32,7 @@ The Inventory Management System is a full-stack web application that allows user
 
 ### Project Structure
 
-bash
-Copy code
+```bash 
 /your-project-root
 │
 ├── /backend
@@ -73,7 +72,7 @@ Clone the repository using:
 git clone https://github.com/your-username/inventory-management-system.git
 cd inventory-management-system
 
-###Backend Setup
+### Backend Setup
 Navigate to the Backend Folder:
 
 bash
@@ -91,7 +90,7 @@ Start the Backend Server:
 node server.js
 The backend server should now be running on http://localhost:5000.
 
-###Frontend Setup
+### Frontend Setup
 Navigate to the Frontend Folder:
 cd ../frontend
 
@@ -176,7 +175,7 @@ The frontend communicates with the backend using RESTful APIs.
 Backend serves the data requested by the frontend and processes CRUD operations on the MongoDB database.
 
 
-###Docker Setup (Optional)
+### Docker Setup (Optional)
 If you have Docker installed, you can use docker-compose to run both frontend and backend services easily.
 
 Build and Run Services:
@@ -189,7 +188,7 @@ Backend will run on http://localhost:5000.
 Contribution Guidelines
 If you would like to contribute, please:
 
-###Fork the repository.
+### Fork the repository.
 Create a new branch (git checkout -b feature-branch).
 Commit your changes (git commit -m "Add a feature").
 Push to the branch (git push origin feature-branch).
