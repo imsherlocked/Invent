@@ -50,7 +50,7 @@ const TABLE_NAME = 'inventorydbsecondary'; // DynamoDB Table Name
 //     res.json(newItem);
 // });
 
-app.get('https://invent-backend-ytde.onrender.com/api/inventory/items', async (req, res) => {
+app.get('/api/inventory/items', async (req, res) => {
     try {
         const items = await Item.find();
         res.json(items);
