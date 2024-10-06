@@ -77,6 +77,7 @@ Navigate to the Backend Folder:
 ```bash
 cd backend
 ```
+###Installation
 
 **Install Dependencies:**
 ```
@@ -95,32 +96,43 @@ node server.js
 The backend server should now be running on http://localhost:5000.
 ```
 
-### Frontend Setup
+**Frontend Setup**
 Navigate to the Frontend Folder:
+```
 cd ../frontend
+```
 
 Install Dependencies:
+```
 npm install
 
 REACT_APP_API_URL=http://localhost:5000/api
+```
 
-Start the Frontend Development Server:
+**Start the Frontend Development Server:**
+```
 npm start
 The frontend should now be running on http://localhost:3000.
+```
 
-Running the Application
+###Running the Application
+```
 Backend: http://localhost:5000
 Frontend: http://localhost:3000
 Navigate to http://localhost:3000 in your browser to start using the inventory management system.
+```
 
-API Documentation
-Base URL
+###API Documentation
+
+**Base URL**
+```
 http://localhost:5000/api/inventory
+```
 
-Endpoints
+**Endpoints**
 Add Item
 POST /add
-
+```
 Description: Adds a new inventory item.
 Request Body:
 json
@@ -131,17 +143,21 @@ Copy code
   "price": 20.5
 }
 Response: Returns the created item.
+```
+
 Get Items
 GET /items?page=1&limit=7
-
+```
 Description: Fetches inventory items with pagination.
 Query Parameters:
 page: Page number (default = 1)
 limit: Number of items per page (default = 7)
 Response: Returns a list of inventory items.
+```
+
 Update Item
 PUT /update/:id
-
+```
 Description: Updates an existing inventory item.
 Request Params: id of the item to be updated.
 Request Body:
@@ -153,13 +169,19 @@ Copy code
   "price": 25.0
 }
 Response: Returns the updated item.
+```
+
 Delete Item
 DELETE /delete/:id
-
+```
 Description: Deletes an inventory item by its ID.
 Request Params: id of the item to be deleted.
 Response: Confirmation message of item deletion.
-Architecture Overview
+
+```
+
+###Architecture Overview
+```
 Frontend:
 
 Built using React.
@@ -178,15 +200,16 @@ API Communication:
 
 The frontend communicates with the backend using RESTful APIs.
 Backend serves the data requested by the frontend and processes CRUD operations on the MongoDB database.
-
+```
 
 ### Docker Setup (Optional)
 If you have Docker installed, you can use docker-compose to run both frontend and backend services easily.
 
 Build and Run Services:
-
+```
 docker-compose up --build
 Docker Compose Overview:
+```
 
 Frontend will run on http://localhost:3000.
 Backend will run on http://localhost:5000.
@@ -194,8 +217,9 @@ Contribution Guidelines
 If you would like to contribute, please:
 
 ### Fork the repository.
+```
 Create a new branch (git checkout -b feature-branch).
 Commit your changes (git commit -m "Add a feature").
 Push to the branch (git push origin feature-branch).
 Open a pull request.
-
+```
