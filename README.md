@@ -56,7 +56,7 @@ The Inventory Management System is a full-stack web application that allows user
 ├── README.md                   # Documentation
 └── .gitignore                  # Ignored files and folders
 
-### Setup Instructions
+```
 
 #### Prerequisites
 - **Node.js** (v14 or higher)
@@ -64,31 +64,36 @@ The Inventory Management System is a full-stack web application that allows user
 - **MongoDB** (local or cloud instance)
 - **Git**
 
-#### Cloning the Repository
+**Cloning the Repository**
 
-Clone the repository using:
-
-##bash
+``` bash
 git clone https://github.com/your-username/inventory-management-system.git
 cd inventory-management-system
+```
 
-### Backend Setup
+**Backend Setup**
 Navigate to the Backend Folder:
 
-bash
+```bash
 cd backend
+```
 
-Install Dependencies:
+**Install Dependencies:**
+```
 npm install
+```
 
-Set Up Environment Variables:
+**Set Up Environment Variables:**
+```
 PORT=5000
 DATABASE_URL=mongodb://localhost:27017/inventory
+```
 
-
-Start the Backend Server:
+**Start the Backend Server:**
+```
 node server.js
 The backend server should now be running on http://localhost:5000.
+```
 
 ### Frontend Setup
 Navigate to the Frontend Folder:
