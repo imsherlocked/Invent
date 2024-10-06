@@ -116,7 +116,7 @@ function App() {
                 element={user ? <Navigate to="/register" /> : <Login />}
               />
               <Route path="/login" element={<Login />} />
-              <Route path="https://invent-frontend.onrender.com/register" element={<SignUp />} />
+              <Route path="/register" element={<SignUp />} />
               {/* <Route path="/profile" element={<Profile />} /> */}
               <Route path="/inventory" element={<InventoryManagement />} />
               
