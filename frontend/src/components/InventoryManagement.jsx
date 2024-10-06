@@ -67,6 +67,7 @@ function InventoryManagement() {
 
     const fetchItems = async () => {
         try {
+            console.log("Inside ftech");
             // const response = await axios.get(`http://localhost:5000/api/inventory/items?page=${page}&limit=${itemsPerPage}`);
             const response = await axios.get(`http://localhost:5000/api/inventory/items`);
             setItems(response.data);
@@ -117,6 +118,7 @@ function InventoryManagement() {
     // };
 
     const addItem = async () => {
+        console.log("Inside addItem");
         try {
             if (quantity === '' || price === '') {
                 alert('Please fill in all fields.');
