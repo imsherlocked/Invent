@@ -5,11 +5,13 @@ import { toast } from "react-toastify";
 // import SignInwithGoogle from "./signInWIthGoogle";
 
 function Login() {
+  console.log("Inside Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Inside Login (handleSubmit");
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in Successfully");
