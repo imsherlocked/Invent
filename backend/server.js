@@ -50,7 +50,7 @@ const TABLE_NAME = 'inventorydbsecondary'; // DynamoDB Table Name
 //     res.json(newItem);
 // });
 
-app.get('/api/inventory/items', async (req, res) => {
+app.get('https://invent-backend-ytde.onrender.com/api/inventory/items', async (req, res) => {
     try {
         const items = await Item.find();
         res.json(items);
@@ -87,7 +87,7 @@ app.get('/api/inventory/items', async (req, res) => {
 
 
 
-app.post('/api/inventory/add', async (req, res) => {
+app.post('https://invent-backend-ytde.onrender.com/api/inventory/add', async (req, res) => {
     try {
         const newItem = new Item(req.body);
         await newItem.save();
@@ -119,7 +119,7 @@ app.post('/api/inventory/add', async (req, res) => {
     }
 });
 
-app.put('/api/inventory/update/:id', async (req, res) => {
+app.put('https://invent-backend-ytde.onrender.com/api/inventory/update/:id', async (req, res) => {
     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
     try {
@@ -151,7 +151,7 @@ app.put('/api/inventory/update/:id', async (req, res) => {
     res.json(updatedItem);
 });
 
-app.delete('/api/inventory/delete/:id', async (req, res) => {
+app.delete('https://invent-backend-ytde.onrender.com/api/inventory/delete/:id', async (req, res) => {
     await Item.findByIdAndDelete(req.params.id);
 
     try {
