@@ -113,10 +113,10 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={user ? <Navigate to="/login" /> : <Login />}
+                element={user ? <Navigate to="/register" /> : <Login />}
               />
               <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<SignUp />} />
+              <Route path="https://invent-frontend.onrender.com/register" element={<SignUp />} />
               {/* <Route path="/profile" element={<Profile />} /> */}
               <Route path="/inventory" element={<InventoryManagement />} />
               
