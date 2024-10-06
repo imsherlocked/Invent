@@ -2,23 +2,36 @@
 # IMS
 
 Inventory Management System
-Table of Contents
-Introduction
-Features
-Project Structure
-Setup Instructions
-Running the Application
-API Documentation
-Architecture Overview
-Introduction
-The Inventory Management System is a full-stack web application that allows users to manage inventory items. It provides CRUD operations (Create, Read, Update, Delete) for items, using a Node.js/Express backend and a React frontend.
 
-Features
-Add, update, delete inventory items.
-View inventory items with pagination.
-Connects to a MongoDB database for data storage.
-RESTful API with a frontend client.
-Project Structure
+Inventory Management System
+
+### Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Setup Instructions](#setup-instructions)
+- [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+- [Architecture Overview](#architecture-overview)
+- [Docker Setup](#docker-setup-optional)
+- [Contribution Guidelines](#contribution-guidelines)
+- [License](#license)
+
+---
+
+### Introduction
+
+The Inventory Management System is a full-stack web application that allows users to manage inventory items. It provides CRUD operations (Create, Read, Update, Delete) for items, using a **Node.js/Express backend** and a **React frontend**.
+
+### Features
+
+- Add, update, delete inventory items.
+- View inventory items with pagination.
+- Connects to a MongoDB database as primary datavase and dynamoDB as secondary database for data storage.
+- RESTful API with a frontend client.
+
+### Project Structure
+
 bash
 Copy code
 /your-project-root
@@ -43,67 +56,51 @@ Copy code
 ├── docker-compose.yml          # Docker Compose file to run both frontend and backend
 ├── README.md                   # Documentation
 └── .gitignore                  # Ignored files and folders
-Setup Instructions
-Prerequisites
-Node.js (v14 or higher)
-npm (or yarn)
-MongoDB (local or cloud instance)
-Git
-Cloning the Repository
+
+### Setup Instructions
+
+#### Prerequisites
+- **Node.js** (v14 or higher)
+- **npm** 
+- **MongoDB** (local or cloud instance)
+- **Git**
+
+#### Cloning the Repository
+
 Clone the repository using:
 
-bash
-Copy code
+##bash
 git clone https://github.com/your-username/inventory-management-system.git
 cd inventory-management-system
-Backend Setup
+
+###Backend Setup
 Navigate to the Backend Folder:
 
 bash
-Copy code
 cd backend
+
 Install Dependencies:
-
-bash
-Copy code
 npm install
+
 Set Up Environment Variables:
-
-Create a .env file in the backend directory:
-
-env
-Copy code
 PORT=5000
 DATABASE_URL=mongodb://localhost:27017/inventory
-Start the Backend Server:
 
-bash
-Copy code
-npm start
+
+Start the Backend Server:
+node server.js
 The backend server should now be running on http://localhost:5000.
 
-Frontend Setup
+###Frontend Setup
 Navigate to the Frontend Folder:
-
-bash
-Copy code
 cd ../frontend
+
 Install Dependencies:
-
-bash
-Copy code
 npm install
-Set Up Environment Variables:
 
-Create a .env file in the frontend directory:
-
-env
-Copy code
 REACT_APP_API_URL=http://localhost:5000/api
-Start the Frontend Development Server:
 
-bash
-Copy code
+Start the Frontend Development Server:
 npm start
 The frontend should now be running on http://localhost:3000.
 
@@ -177,13 +174,13 @@ API Communication:
 
 The frontend communicates with the backend using RESTful APIs.
 Backend serves the data requested by the frontend and processes CRUD operations on the MongoDB database.
-Docker Setup (Optional)
+
+
+###Docker Setup (Optional)
 If you have Docker installed, you can use docker-compose to run both frontend and backend services easily.
 
 Build and Run Services:
 
-bash
-Copy code
 docker-compose up --build
 Docker Compose Overview:
 
@@ -192,10 +189,9 @@ Backend will run on http://localhost:5000.
 Contribution Guidelines
 If you would like to contribute, please:
 
-Fork the repository.
+###Fork the repository.
 Create a new branch (git checkout -b feature-branch).
 Commit your changes (git commit -m "Add a feature").
 Push to the branch (git push origin feature-branch).
 Open a pull request.
-License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+
