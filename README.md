@@ -1,9 +1,8 @@
 
-# IMS
-
 Inventory Management System
 
-Inventory Management System
+### Demo Link: https://invent-frontend.onrender.com
+
 
 ### Table of Contents
 - [Introduction](#introduction)
