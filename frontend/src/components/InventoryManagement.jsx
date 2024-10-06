@@ -70,7 +70,9 @@ function InventoryManagement() {
             console.log("Inside ftech");
             // const response = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items?page=${page}&limit=${itemsPerPage}`);
             const response = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items`);
+            console.log(response);
             setItems(response.data);
+            console.log("Items set")
             // setTotalPages(response.data.totalPages);
         } catch (error) {
             console.error("Error fetching items:", error);
