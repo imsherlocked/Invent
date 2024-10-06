@@ -1,9 +1,11 @@
+// Import dependencies
 const express = require('express');
 const mongoose = require('mongoose');
-const AWS = require('aws-sdk');
+const AWS = require('aws-sdk'); 
 const cors = require('cors');
 require('dotenv').config();
 
+// Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -27,6 +29,7 @@ const itemSchema = new mongoose.Schema({
 
 const Item = mongoose.model('Item', itemSchema);
 
+// AWS DynamoDB Configuration
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -39,17 +42,8 @@ const TABLE_NAME = 'inventorydbsecondary'; // DynamoDB Table Name
 
 
 // CRUD Routes
-// app.get('/api/inventory/items', async (req, res) => {
-//     const items = await Item.find();
-//     res.json(items);
-// });
 
-// app.post('/api/inventory/add', async (req, res) => {
-//     const newItem = new Item(req.body);
-//     await newItem.save();
-//     res.json(newItem);
-// });
-
+//GET : fetch items from the database
 app.get('/api/inventory/items', async (req, res) => {
     try {
         const items = await Item.find();
@@ -59,40 +53,11 @@ app.get('/api/inventory/items', async (req, res) => {
     }
 });
 
-// Update the GET route to support pagination
-// app.get('/api/inventory/items', async (req, res) => {
-//     try {
-//         let { page, limit } = req.query;
-
-//         // Convert page and limit to integers
-//         page = parseInt(page) || 1;
-//         limit = parseInt(limit) || 7;
-
-//         const items = await Item.find()
-//             .limit(limit)
-//             .skip((page - 1) * limit)
-//             .exec();
-
-//         const count = await Item.countDocuments(); // Get the total count of items
-
-//         res.json({
-//             items,
-//             totalPages: Math.ceil(count / limit),
-//             currentPage: page,
-//         });
-//     } catch (error) {
-//         res.status(500).json({ error: 'An error occurred while fetching items.' });
-//     }
-// });
-
-
-
+//POST: add item to the database
 app.post('/api/inventory/add', async (req, res) => {
     try {
         const newItem = new Item(req.body);
         await newItem.save();
-
-        console.log()
 
         try {
             const dynamoParams = {
@@ -109,7 +74,7 @@ app.post('/api/inventory/add', async (req, res) => {
             console.error('Error adding item to DynamoDB:', dynamoError);
             await Item.findByIdAndDelete(newItem._id);
             alert("Database issue please re-enter your entry");
-            // Optionally add logic here to retry or log this somewhere to handle it later.
+            
         }
 
         res.json(newItem);
@@ -119,6 +84,7 @@ app.post('/api/inventory/add', async (req, res) => {
     }
 });
 
+//PUT: Update the item if item exisits in database
 app.put('/api/inventory/update/:id', async (req, res) => {
     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
@@ -151,6 +117,7 @@ app.put('/api/inventory/update/:id', async (req, res) => {
     res.json(updatedItem);
 });
 
+//Delete: Deletes entry from the database
 app.delete('/api/inventory/delete/:id', async (req, res) => {
     await Item.findByIdAndDelete(req.params.id);
 
@@ -170,26 +137,6 @@ app.delete('/api/inventory/delete/:id', async (req, res) => {
 
     res.json({ message: 'Item deleted' });
 });
-// app.get('/items', async (req, res) => {
-//     const items = await Item.find();
-//     res.json(items);
-// });
-
-// app.post('/items', async (req, res) => {
-//     const newItem = new Item(req.body);
-//     await newItem.save();
-//     res.json(newItem);
-// });
-
-// app.put('/items/:id', async (req, res) => {
-//     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
-//     res.json(updatedItem);
-// });
-
-// app.delete('/items/:id', async (req, res) => {
-//     await Item.findByIdAndDelete(req.params.id);
-//     res.json({ message: 'Item deleted' });
-// });
 
 // Start the server
 app.listen(PORT, () => {
