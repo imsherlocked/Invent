@@ -401,6 +401,9 @@ function InventoryManagement() {
                                                     <button className="btn btn-danger btn-sm" onClick={() => deleteItem(item._id)}>
                                                         Delete
                                                     </button>
+                                                     <button className="btn btn-success btn-sm" onClick={() => archieveItem(item._id)}>
+                                                        Archive
+                                                    </button>
                                                 </td>
                                             </tr>
                                         ))}
