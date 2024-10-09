@@ -35,11 +35,7 @@ The Inventory Management System is a full-stack web application that allows user
 │
 ├── /backend
 │   ├── server.js               # Entry point for the backend server
-│   ├── /models                 # Mongoose models for database schema
-│   ├── /routes                 # Express API routes
-│   ├── /controllers            # Business logic for routes
 │   ├── package.json            # Backend dependencies
-│   └── .env                    # Backend environment variables
 │
 ├── /frontend
 │   ├── /src
@@ -47,8 +43,7 @@ The Inventory Management System is a full-stack web application that allows user
 │   │   ├── App.js              # Main React component
 │   │   ├── /components         # Individual UI components
 │   │   ├── /utils              # Utility functions (API integration)
-│   ├── package.json            # Frontend dependencies
-│   └── .env                    # Frontend environment variables (for API URLs)
+│   ├── package.json            # Frontend dependencies 
 │
 ├── docker-compose.yml          # Docker Compose file to run both frontend and backend
 ├── README.md                   # Documentation
