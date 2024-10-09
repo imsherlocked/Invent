@@ -178,8 +178,8 @@ function InventoryManagement() {
     // archive item : POST, DELETE call
     const archieveItem=async(id) => {
         try{
-            await axios.post(`http://localhost:5000/api/inventory/archive/${id}`);
-            await axios.delete(`http://localhost:5000/api/inventory/delete/${id}`);
+            await axios.post(`https://invent-backend-ytde.onrender.com/api/inventory/archive/${id}`);
+            await axios.delete(`https://invent-backend-ytde.onrender.com/api/inventory/delete/${id}`);
             setItems(items.filter(item => item._id !== id));
             alert("Item has been archived successfully");
             console.log('Item archived and deleted successfully');
