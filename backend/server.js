@@ -38,7 +38,8 @@ AWS.config.update({
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-const TABLE_NAME = 'inventorydbsecondary'; // DynamoDB Table Name
+const TABLE_NAME = 'inventorydbsecondary'; // DynamoDB Table Name for backup
+const ARCHIVE_TABLE_NAME = 'archivedb'; // DynamoDB Table Name for archive
 
 
 // CRUD Routes
@@ -61,7 +62,7 @@ app.post('/api/inventory/add', async (req, res) => {
 
         try {
             const dynamoParams = {
-                TableName: 'inventorydbsecondary',
+                TableName: TABLE_NAME,
                 Item: {
                     id: newItem._id.toString(),
                     name: newItem.name,
@@ -90,7 +91,7 @@ app.put('/api/inventory/update/:id', async (req, res) => {
 
     try {
         const dynamoParams = {
-            TableName: 'inventorydbsecondary',
+            TableName: TABLE_NAME,
             Key: {
                 id: req.params.id,
             },
@@ -123,7 +124,7 @@ app.delete('/api/inventory/delete/:id', async (req, res) => {
 
     try {
         const dynamoParams = {
-            TableName: 'inventorydbsecondary',
+            TableName: TABLE_NAME,
             Key: {
                 id: req.params.id,
             },
@@ -136,6 +137,48 @@ app.delete('/api/inventory/delete/:id', async (req, res) => {
     }
 
     res.json({ message: 'Item deleted' });
+});
+
+app.post('/api/inventory/archive/:id', async (req, res) => {
+    try {
+        // Find the item in MongoDB
+        const itemToArchive = await Item.findById(req.params.id);
+        if (!itemToArchive) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
+
+        // Copy the item to DynamoDB archive table
+        const archiveParams = {
+            TableName: ARCHIVE_TABLE_NAME, // DynamoDB Archive Table Name
+            Item: {
+                id: itemToArchive._id.toString(),
+                name: itemToArchive.name,
+                quantity: itemToArchive.quantity,
+                price: itemToArchive.price,
+                archivedAt: new Date().toISOString(), // Optional: Store when the item was archived
+            },
+        };
+
+        await dynamoDB.put(archiveParams).promise(); // Insert into archive table
+
+        // Delete the item from the active DynamoDB table
+        const deleteParams = {
+            TableName: TABLE_NAME,
+            Key: {
+                id: itemToArchive._id.toString(),
+            },
+        };
+
+        await dynamoDB.delete(deleteParams).promise(); // Remove from active table
+
+        // Optionally delete the item from MongoDB if no longer needed
+        await Item.findByIdAndDelete(req.params.id);
+
+        res.json({ message: 'Item archived successfully' });
+    } catch (error) {
+        console.error('Error archiving item:', error);
+        res.status(500).json({ error: 'Failed to archive item' });
+    }
 });
 
 // Start the server
