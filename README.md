@@ -14,7 +14,6 @@ Inventory Management System
 - [Architecture Overview](#architecture-overview)
 - [Docker Setup](#docker-setup-optional)
 - [Contribution Guidelines](#contribution-guidelines)
-- [License](#license)
 
 ---
 
@@ -61,13 +60,14 @@ The Inventory Management System is a full-stack web application that allows user
 - **Node.js** (v14 or higher)
 - **npm** 
 - **MongoDB** (local or cloud instance)
+- **AWS** 
+- **Firebase** 
 - **Git**
 
 **Cloning the Repository**
 
 ``` bash
-git clone https://github.com/your-username/inventory-management-system.git
-cd inventory-management-system
+git clone https://github.com/imsherlocked/Invent.git
 ```
 
 **Backend Setup**
@@ -86,7 +86,12 @@ npm install
 **Set Up Environment Variables:**
 ```
 PORT=5000
-DATABASE_URL=mongodb://localhost:27017/inventory
+DATABASE_UR (Local)=mongodb://localhost:27017/inventory
+
+
+DATABASE_URL (Cloud) = mongodb+srv://yourUsername:yourPassword@cluster0.mongodb.net/yourDatabase?retryWrites=true
+
+
 ```
 
 **Start the Backend Server:**
@@ -104,7 +109,6 @@ cd ../frontend
 Install Dependencies:
 ```
 npm install
-
 REACT_APP_API_URL=http://localhost:5000/api
 ```
 
@@ -129,6 +133,7 @@ http://localhost:5000/api/inventory
 ```
 
 **Endpoints**
+
 Add Item
 POST /add
 ```
@@ -145,12 +150,9 @@ Response: Returns the created item.
 ```
 
 Get Items
-GET /items?page=1&limit=7
+GET /items
 ```
 Description: Fetches inventory items with pagination.
-Query Parameters:
-page: Page number (default = 1)
-limit: Number of items per page (default = 7)
 Response: Returns a list of inventory items.
 ```
 
@@ -207,12 +209,11 @@ If you have Docker installed, you can use docker-compose to run both frontend an
 Build and Run Services:
 ```
 docker-compose up --build
-Docker Compose Overview:
 ```
-
 Frontend will run on http://localhost:3000.
 Backend will run on http://localhost:5000.
-Contribution Guidelines
+
+**Contribution Guidelines**
 If you would like to contribute, please:
 
 ### Fork the repository.
