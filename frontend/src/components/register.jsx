@@ -32,6 +32,7 @@ function Register() {
       // });
     } catch (error) {
       alert("Register successful");
+      window.location.href = "/login";
       console.log(error.message);
       // toast.error(error.message, {
       //   position: "bottom-center",
