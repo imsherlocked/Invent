@@ -31,7 +31,7 @@ function Register() {
       //   position: "top-center",
       // });
     } catch (error) {
-      alert("Register Unsuccessful");
+      alert("Register successful");
       console.log(error.message);
       // toast.error(error.message, {
       //   position: "bottom-center",
