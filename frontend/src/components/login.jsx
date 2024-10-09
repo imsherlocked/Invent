@@ -16,15 +16,17 @@ function Login() {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in Successfully");
       window.location.href = "/inventory";
-      toast.success("User logged in Successfully", {
-        position: "top-center",
-      });
+      // toast.success("User logged in Successfully", {
+      //   position: "top-center",
+      // });
+      alert("login successful")
     } catch (error) {
+      alert("invalid Credentials : Please Try Again")
       console.log(error.message);
 
-      toast.error(error.message, {
-        position: "bottom-center",
-      });
+      // toast.error(error.message, {
+      //   position: "bottom-center",
+      // });
     }
   };
 
