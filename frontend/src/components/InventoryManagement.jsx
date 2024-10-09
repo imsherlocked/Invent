@@ -63,6 +63,7 @@ function InventoryManagement() {
             console.log(response);
             setItems(response.data);
             console.log("Items set")
+            alert("Displayed all items")
         } catch (error) {
             console.error("Error fetching items:", error);
         }
@@ -137,6 +138,7 @@ function InventoryManagement() {
                         }
                     } catch (error) {
                         // Handle error responses from the server (e.g., 4xx, 5xx)
+                        alert("Error in adding item");
                         console.error("Error in adding item:", error);
                         
                         // Use error.response to access the status code
@@ -156,6 +158,7 @@ function InventoryManagement() {
             setQuantity(0);
             setPrice(0);
         } catch (error) {
+            alert("Error adding/updating item");
             console.error("Error adding/updating item:", error);
         }
     };
@@ -165,7 +168,9 @@ function InventoryManagement() {
         try {
             await axios.delete(`https://invent-backend-ytde.onrender.com/api/inventory/delete/${id}`);
             setItems(items.filter(item => item._id !== id));
+            alert("Item deleted successfully)
         } catch (error) {
+             alert("Error deleting item");
             console.error("Error deleting item:", error);
         }
     };
@@ -176,9 +181,10 @@ function InventoryManagement() {
             await axios.post(`http://localhost:5000/api/inventory/archive/${id}`);
             await axios.delete(`http://localhost:5000/api/inventory/delete/${id}`);
             setItems(items.filter(item => item._id !== id));
-
+            alert("Item has been archived successfully");
             console.log('Item archived and deleted successfully');
         }catch(error){
+             alert("Error in archiving data");
             console.error("Error archiving item:", error);
         }
     };
