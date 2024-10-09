@@ -120,6 +120,14 @@ app.put('/api/inventory/update/:id', async (req, res) => {
 
 //Delete: Deletes entry from the database
 app.delete('/api/inventory/delete/:id', async (req, res) => {
+
+    const itemId = req.params.id;
+    try {
+    const itemToDelete = await Item.findById(itemId);
+        if (!itemToDelete) {
+            return res.status(404).json({ error: 'Item not found in MongoDB' });
+        }
+    
     await Item.findByIdAndDelete(req.params.id);
 
     try {
@@ -137,6 +145,10 @@ app.delete('/api/inventory/delete/:id', async (req, res) => {
     }
 
     res.json({ message: 'Item deleted' });
+    }catch (mongoError) {
+        console.error('Error deleting item from MongoDB:', mongoError);
+        res.status(500).json({ error: 'Failed to delete item from MongoDB' });
+    }
 });
 
 app.post('/api/inventory/archive/:id', async (req, res) => {
