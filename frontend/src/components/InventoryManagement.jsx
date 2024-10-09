@@ -168,7 +168,7 @@ function InventoryManagement() {
         try {
             await axios.delete(`https://invent-backend-ytde.onrender.com/api/inventory/delete/${id}`);
             setItems(items.filter(item => item._id !== id));
-            alert("Item deleted successfully)
+            alert("Item deleted successfully")
         } catch (error) {
              alert("Error deleting item");
             console.error("Error deleting item:", error);
