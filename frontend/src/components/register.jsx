@@ -25,14 +25,17 @@ function Register() {
         });
       }
       console.log("User Registered Successfully!!");
-      toast.success("User Registered Successfully!!", {
-        position: "top-center",
-      });
+      window.location.href = "/login";
+      alert("User Registered Successfully")
+      // toast.success("User Registered Successfully!!", {
+      //   position: "top-center",
+      // });
     } catch (error) {
+      alert("Register Unsuccessful");
       console.log(error.message);
-      toast.error(error.message, {
-        position: "bottom-center",
-      });
+      // toast.error(error.message, {
+      //   position: "bottom-center",
+      // });
     }
   };
 
