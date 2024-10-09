@@ -63,7 +63,6 @@ function InventoryManagement() {
             console.log(response);
             setItems(response.data);
             console.log("Items set")
-            alert("Displayed all items")
         } catch (error) {
             console.error("Error fetching items:", error);
         }
