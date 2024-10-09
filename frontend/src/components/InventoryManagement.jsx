@@ -1,6 +1,8 @@
+//inport Dependecies
 import React, { useEffect, useState } from 'react';
 import '../styles/style.css'
 import axios from 'axios';
+import { BsArrowLeft, BsArrowRight, BsBagPlus, BsBarChart, BsBodyText, BsList, BsMenuButton, BsPencilSquare, BsTrash2, BsTrash3, } from "react-icons/bs";
 import { Bar, Pie, Line, Doughnut, Radar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -30,6 +32,7 @@ ChartJS.register(
 );
 
 function InventoryManagement() {
+    // UseStates 
     const [items, setItems] = useState([]);
     const [itemName, setItemName] = useState("");
     const [quantity, setQuantity] = useState(0);
@@ -38,9 +41,6 @@ function InventoryManagement() {
     const [editingItemId, setEditingItemId] = useState(null);
     const [activeTab, setActiveTab] = useState('dashboard');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const [totalPages, setTotalPages] = useState(1);
-    // const itemsPerPage = 7;
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -48,77 +48,27 @@ function InventoryManagement() {
 
 
     useEffect(() => {
-        // fetchItems(currentPage);
+        
         fetchItems();
-    // }, [currentPage]);
+   
     }, []);
 
-    // const goToNextPage = () => {
-    //     if (currentPage < totalPages) {
-    //         setCurrentPage(currentPage + 1);
-    //     }
-    // };
-
-    // const goToPreviousPage = () => {
-    //     if (currentPage > 1) {
-    //         setCurrentPage(currentPage - 1);
-    //     }
-    // };
-
+  
+    // Fetch Items : GET call
     const fetchItems = async () => {
         try {
             console.log("Inside ftech");
-            // const response = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items?page=${page}&limit=${itemsPerPage}`);
+           
             const response = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items`);
             console.log(response);
             setItems(response.data);
             console.log("Items set")
-            // setTotalPages(response.data.totalPages);
         } catch (error) {
             console.error("Error fetching items:", error);
         }
     };
 
-    // const addItem = async () => {
-    //     try {
-    //         const newItem = {
-    //             name: itemName,
-    //             quantity,
-    //             price,
-    //         };
-
-    //         if (quantity === '' || price === '') {
-    //             alert('Please fill in all fields.');
-    //             return;
-    //           }
-          
-    //           if (quantity < 0 || price < 0) {
-    //             alert('Quantity and price must be non-negative.');
-    //             return;
-    //           }
-
-    //         if (editingItemId) {
-    //             // Update the item if we are editing
-    //             const response = await axios.put(`https://invent-backend-ytde.onrender.com/api/inventory/update/${editingItemId}`, newItem);
-    //             setItems(items.map(item => (item._id === editingItemId ? response.data : item)));
-    //             setEditingItemId(null);
-    //         } else {
-    //             // Otherwise, add a new item
-    //             if(itemName){
-    //             const response = await axios.post('https://invent-backend-ytde.onrender.com/api/inventory/add', newItem);
-    //             setItems([...items, response.data]);
-    //             }
-    //         }
-
-    //         // Clear form fields
-    //         setItemName("");
-    //         setQuantity(0);
-    //         setPrice(0);
-    //     } catch (error) {
-    //         console.error("Error adding/updating item:", error);
-    //     }
-    // };
-
+    // add Item : POST call
     const addItem = async () => {
         console.log("Inside addItem");
         try {
@@ -139,14 +89,12 @@ function InventoryManagement() {
                 // Check if an item with the same name already exists
                 const existingItemResponse = await axios.get(`https://invent-backend-ytde.onrender.com/api/inventory/items`);
                 const existingItem = existingItemResponse.data.find(item => item.name === itemName);
-                // if(newItem.price)
-                    // existingItem.price=price;
+               
                 if (existingItem) {
                     // If editing, update based on conditions for negative or positive quantity
-                    
                     if (editingItemId) {
                         existingItem.price=price;
-                        if (quantity < 0) {
+                        if (parseInt(existingItem.quantity)+ parseInt(quantity) < 0) {
                             // Only allow subtraction if current stock is greater than input value
                             if (parseInt(existingItem.quantity)+parseInt(quantity) >= 0) {
                                 existingItem.quantity=parseInt(existingItem.quantity)+parseInt(quantity);
@@ -198,22 +146,7 @@ function InventoryManagement() {
                             // Handle network errors or issues that prevented the request from completing
                             alert("Network error: Unable to add item. Please check your connection.");
                         }
-                    }
-                    
-                    
-                    // const response = await axios.post('https://invent-backend-ytde.onrender.com/api/inventory/add', newItem);
-                    // console.log(response.status)
-                    // if(response.status)
-                    // {
-                    //     alert("Database added successfully");
-                    //     setItems([...items, response.data]);
-                    //     fetchItems();   
-                    // }
-                    // else{
-                    //     alert("Error in adding data ")
-                    //     return
-                    // }
-                    
+                    }                    
                     
                 }
             }
@@ -226,6 +159,8 @@ function InventoryManagement() {
             console.error("Error adding/updating item:", error);
         }
     };
+
+    //delete item : DELETE call
     const deleteItem = async (id) => {
         try {
             await axios.delete(`https://invent-backend-ytde.onrender.com/api/inventory/delete/${id}`);
@@ -235,6 +170,20 @@ function InventoryManagement() {
         }
     };
 
+    // archive item : POST, DELETE call
+    const archieveItem=async(id) => {
+        try{
+            await axios.post(`http://localhost:5000/api/inventory/archive/${id}`);
+            await axios.delete(`http://localhost:5000/api/inventory/delete/${id}`);
+            setItems(items.filter(item => item._id !== id));
+
+            console.log('Item archived and deleted successfully');
+        }catch(error){
+            console.error("Error archiving item:", error);
+        }
+    };
+
+    // State Updates on Data change
     const editItem = (item) => {
         setItemName(item.name);
         setQuantity(item.quantity);
@@ -337,129 +286,6 @@ function InventoryManagement() {
         ],
     };
 
-
-    // return (
-    //     <div className="container mt-5">
-    //         <div className="card shadow-lg inventory-card">
-    //             <div className="card-header bg-primary text-white p-4 inventory-header">
-    //                 <h2 className="mb-0 text-center">Inventory Management System</h2>
-    //             </div>
-    //             <h2>Edge cases: 1. No negative values allowed
-    //                             2. If same itemName then it should be updated not added
-    //                             3. If edit item user can input -14 if only the current stocks is more than 14 then it will be updated, otherwise alert will be given
-    //                             4. 
-    //             </h2>
-    //             <div className="card-body">
-    //                 <div className="mb-4">
-    //                     <h4 className="text-center">{editingItemId ? "Edit Item" : "Add New Item"}</h4>
-    //                     <div className="row g-3">
-    //                         <div className="col-md-3">
-    //                             <input
-    //                                 type="text"
-    //                                 className="form-control"
-    //                                 value={itemName}
-    //                                 onChange={(e) => setItemName(e.target.value)}
-    //                                 placeholder="Item Name"
-    //                             />
-    //                         </div>
-    //                         <div className="col-md-3">
-    //                             <input
-    //                                 type="number"
-    //                                 className="form-control"
-    //                                 value={quantity}
-    //                                 onChange={(e) => setQuantity(e.target.value)}
-    //                                 placeholder="Quantity"
-    //                             />
-    //                         </div>
-    //                         <div className="col-md-3">
-    //                             <input
-    //                                 type="number"
-    //                                 className="form-control"
-    //                                 value={price}
-    //                                 onChange={(e) => setPrice(e.target.value)}
-    //                                 placeholder="Price"
-    //                             />
-    //                         </div>
-    //                         <div className="col-md-3 ">
-    //                             <button className={`btn ${editingItemId ? ' btn-warning' : 'btn btn-success'} w-100`} onClick={addItem}>
-    //                                 {editingItemId ? "Update Item" : "Add Item"}
-    //                             </button>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-
-    //                 <hr />
-
-    //                 <h4 className="mb-3 text-center">Inventory Items</h4>
-    //                 <div className="table-responsive">
-    //                     <table className="table table-bordered table-striped table-hover">
-    //                         <thead className="table-primary">
-    //                             <tr>
-    //                                 <th>Item Name</th>
-    //                                 <th>Quantity</th>
-    //                                 <th>Price ($)</th>
-    //                                 <th>Total ($)</th>
-    //                                 <th>Actions</th>
-    //                             </tr>
-    //                         </thead>
-    //                         <tbody>
-    //                             {items.map(item => (
-    //                                 <tr key={item._id}>
-    //                                     <td>{item.name}</td>
-    //                                     <td>{item.quantity}</td>
-    //                                     <td>{item.price.toFixed(2)}</td>
-    //                                     <td>{(item.quantity * item.price).toFixed(2)}</td>
-    //                                     <td>
-    //                                         <button className="btn btn-warning btn-sm me-2" onClick={() => editItem(item)}>
-    //                                             Edit
-    //                                         </button>
-    //                                         <button className="btn btn-danger btn-sm" onClick={() => deleteItem(item._id)}>
-    //                                             Delete
-    //                                         </button>
-    //                                     </td>
-    //                                 </tr>
-    //                             ))}
-    //                         </tbody>
-    //                     </table>
-    //                     {/* <div className="d-flex justify-content-between align-items-center mt-3">
-    //                     <button className="btn btn-primary" onClick={goToPreviousPage} disabled={currentPage === 1}>
-    //                     Previous
-    //                 </button>
-    //                 <span> Page {currentPage} of {totalPages} </span>
-    //                 <button className="btn btn-primary" onClick={goToNextPage} disabled={currentPage === totalPages}>
-    //                     Next
-    //                 </button>
-    //             </div> */}
-    //                 </div>
-
-    //                 <hr />
-                                 
-    //                 <h4 className="mb-3 text-center" styled={"text-align:center"}>Inventory Charts</h4>
-    //                 <div className='charts'> 
-    //                 <div className="chart-container mb-5">
-    //                     <Bar data={chartData} />
-    //                 </div>
-
-    //                 <div className="chart-container mb-5">
-    //                     <Line data={valueChartData} />
-    //                 </div>
-
-    //                 <div className="chart-container mb-5">
-    //                     <Pie data={categoryDistributionData} />
-    //                 </div>
-    //                 <br/>
-    //                 <div className="chart-container mb-5">
-    //                     <Doughnut  data={doughnutChartData} />
-    //                 </div>
-    //                 <div className="chart-container mb-5">
-    //                     <Radar  data={radarChartData} />
-    //                 </div>
-    //                 </div> 
-    //             </div>
-    //         </div>
-    //     </div>
-    // );
-
     const showTab = (tabName) => {
         setActiveTab(tabName);
         if (isSidebarOpen) {
@@ -473,9 +299,7 @@ function InventoryManagement() {
 
             {/* Burger Icon for Mobile and Tablet */}
             <div className="burger-icon" onClick={toggleSidebar}>
-                <div className="line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
+                <BsList />
             </div>
 
             {/* <div className="row"> */}
@@ -484,13 +308,13 @@ function InventoryManagement() {
                     <h3>Inventory System</h3>
                     <ul className="nav flex-column">
                         <li className="nav-item">
-                            <button className="nav-link btn btn-link text-white" onClick={() => showTab('dashboard')}>Dashboard</button>
+                            <BsBarChart style={{ width: '1em' }} /><button className="nav-link btn btn-link text-white" onClick={() => showTab('dashboard')}>Dashboard</button>
                         </li>
                         <li className="nav-item">
-                            <button className="nav-link btn btn-link text-white" onClick={() => showTab('inventory')}>Inventory</button>
+                            <BsBagPlus style={{ width: '1em' }} /><button className="nav-link btn btn-link text-white" onClick={() => showTab('inventory')}>Inventory</button>
                         </li>
                         <li className="nav-item">
-                            <button className="nav-link btn btn-link text-white" onClick={() => showTab('instructions')}>Instructions</button>
+                             <BsBodyText style={{ width: '1em' }} /><button className="nav-link btn btn-link text-white" onClick={() => showTab('instructions')}>Instructions</button>
                         </li>
                     </ul>
                 </div>
@@ -513,7 +337,7 @@ function InventoryManagement() {
                     )}
 
                     {activeTab === 'inventory' && (
-                        <div className="inventory">
+                        <div className="inventory container">
                             <h2 className="text-center">{editingItemId ? "Edit Item" : "Add New Item"}</h2>
                             <div className="mb-4">
                                 <div className="row g-3">
@@ -570,7 +394,7 @@ function InventoryManagement() {
                                                 <td>{item.quantity}</td>
                                                 <td>{item.price.toFixed(2)}</td>
                                                 <td>{(item.quantity * item.price).toFixed(2)}</td>
-                                                <td>
+                                                 <td style={{ display: "flex" }}>
                                                     <button className="btn btn-warning btn-sm me-2" onClick={() => editItem(item)}>
                                                         Edit
                                                     </button>
