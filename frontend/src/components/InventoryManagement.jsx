@@ -423,9 +423,28 @@ function InventoryManagement() {
                             <h2 className="text-center">Instructions</h2>
                             <p>Welcome to the Inventory Management System! Here’s how to use it:</p>
                             <ul>
-                                <li>Navigate to the Dashboard tab to view inventory visualizations.</li>
-                                <li>Go to the Inventory tab to add new items or view/edit existing items.</li>
-                                <li>Use the instructions to learn how to operate the system effectively.</li>
+                                <ul>
+  <li>Navigate to the <strong>Dashboard tab</strong> to view inventory visualizations, including stock quantity, total value, and distribution charts.</li>
+
+  <li>Go to the <strong>Inventory tab</strong> to manage items, where you can:</li>
+  <ul>
+    <li><strong>Add new items:</strong> Enter the item name, quantity, and price, then click the "Add Item" button to create a new entry in the database.</li>
+      <ul>
+            <li>If trying to add an existing item, it would not add but the stock would be incremented based on the user input.</li>
+            
+        </ul>
+    <li><strong>Edit existing items:</strong> Select the "Edit" button for any item to update its name, quantity, or price, and then save changes.</li>
+        <ul>
+            <li>If use wants to deduct the stock, put how much you want to deduct eg: -4, -10,-3</li>
+            <li>If use wants to add the stock, put how much you want to add eg: 4, 10,3</li>
+        </ul>
+    <li><strong>Delete items:</strong> Permanently remove an item from the inventory by clicking the "Delete" button next to the item.</li>
+    <li><strong>Archive items:</strong> Use the "Archive" button to move inactive items to the archive database for long-term storage.</li>
+  </ul>
+  
+  <li>Follow these instructions to effectively operate the system and perform CRUD operations (Create, Read, Update, Delete).</li>
+</ul>
+
                             </ul>
                         </div>
                     )}
